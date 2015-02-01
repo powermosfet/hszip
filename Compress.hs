@@ -1,6 +1,7 @@
 module Compress where 
 
-import qualified Data.ByteString as Bs
+import Data.ByteString 
+import Data.BitString 
 import HuffmanTree as H
 
-compress :: Bs.ByteString -> Bs.ByteString
+compress :: ByteString -> ByteString
