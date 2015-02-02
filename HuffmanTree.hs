@@ -1,5 +1,7 @@
 module HuffmanTree where
 
+import BitString
+
 import Data.Word
 import Data.Map
 import qualified Data.List as L
@@ -32,9 +34,9 @@ build_tree leaves = build [] $ L.sort leaves
                     (small1, branches', leaves') = smallest branches leaves
                     (small2, branches'', leaves'') = smallest branches' leaves'
           
-get_bitstring :: Tree -> Word8 -> Maybe [Bool]
+get_bitstring :: Tree -> Word8 -> Maybe BitString
 get_bitstring (Leaf w) x | w == x = Just []
                          | otherwise = Nothing
-get_bitstring (Branch a b) x = (liftM (False:) ( get_bitstring a x))
+get_bitstring (Branch a b) x = (liftM (Zero:) ( get_bitstring a x))
                                `mplus`
-                               (liftM (True:) ( get_bitstring b x))
+                               (liftM (One:) ( get_bitstring b x))
