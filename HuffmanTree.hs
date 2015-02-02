@@ -22,8 +22,8 @@ get_weights :: ByteString -> [ WeightTree ]
 get_weights bytes = [ WeightTree  weight (Leaf byte) | (byte, weight) <- toList weightMap ]
     where weightMap = fromListWith (+) [ (c, 1) | c <- unpack bytes ]
 
-build_tree :: [ WeightTree ] -> Tree
-build_tree leaves = build [] $ L.sort leaves
+build_tree :: ByteString -> Tree
+build_tree bytes = build [] $ L.sort $ get_weights bytes
     where combine (WeightTree wa a) (WeightTree wb b) = WeightTree (wa + wb) (Branch a b)
           build [WeightTree _ t] [] = t 
           build branches leaves = build ((combine small1 small2):branches'') leaves''
